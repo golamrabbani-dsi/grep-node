@@ -1,7 +1,7 @@
 const fs = require('fs');
 const readline = require('readline');
-
-const [ queryVal, path]  = process.argv.slice( 2, 4 )
+console.log(process.argv)
+let [ queryVal, path, caseSensetive]  = process.argv.slice( 2, 5 )
 
 const rl = readline.createInterface({
   input: fs.createReadStream(path),
@@ -9,7 +9,10 @@ const rl = readline.createInterface({
 });
 
 rl.on('line', (line) => {
-    
+    if(!caseSensetive) {
+        queryVal = queryVal.toLowerCase();
+        line = line.toLowerCase()
+    }
    let start = line.search(queryVal)
     if(start>=0) {
         let print = line.substr(start,queryVal.length+40)
